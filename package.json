@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/sheadawson/silverstripe-linkable/",
   "dependencies": {
-    "apollo-client": "^0.5.5",
+    "apollo-client": "^2.6.10",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "4.0.0-beta",
     "chosen-js": "^1.5.1",
