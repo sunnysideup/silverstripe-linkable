@@ -53,18 +53,21 @@ $.entwine('ss', ($) => {
 
       // handle dialog form submission
       this.getDialog().on('submit', 'form', function () {
-        const options = {};
-        options.success = function (response) {
-          if ($(response).is('.field')) {
-            self.getDialog().empty().dialog('close');
-            self.parents('.field:first').replaceWith(response);
-            form.addClass('changed');
-          } else {
-            self.getDialog().html(response);
+        const $form = $(this);
+        $.ajax({
+          url: $form.attr('action'),
+          type: $form.attr('method') || 'POST',
+          data: $form.serialize(),
+          success(response) {
+            if ($(response).is('.field')) {
+              self.getDialog().empty().dialog('close');
+              self.parents('.field:first').replaceWith(response);
+              form.addClass('changed');
+            } else {
+              self.getDialog().html(response);
+            }
           }
-        };
-
-        $(this).ajaxSubmit(options);
+        });
 
         return false;
       });

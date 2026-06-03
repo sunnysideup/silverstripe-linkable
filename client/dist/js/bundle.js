@@ -170,18 +170,21 @@ _jquery2.default.entwine('ss', function ($) {
       });
 
       this.getDialog().on('submit', 'form', function () {
-        var options = {};
-        options.success = function (response) {
-          if ($(response).is('.field')) {
-            self.getDialog().empty().dialog('close');
-            self.parents('.field:first').replaceWith(response);
-            form.addClass('changed');
-          } else {
-            self.getDialog().html(response);
+        var $form = $(this);
+        $.ajax({
+          url: $form.attr('action'),
+          type: $form.attr('method') || 'POST',
+          data: $form.serialize(),
+          success: function success(response) {
+            if ($(response).is('.field')) {
+              self.getDialog().empty().dialog('close');
+              self.parents('.field:first').replaceWith(response);
+              form.addClass('changed');
+            } else {
+              self.getDialog().html(response);
+            }
           }
-        };
-
-        $(this).ajaxSubmit(options);
+        });
 
         return false;
       });
